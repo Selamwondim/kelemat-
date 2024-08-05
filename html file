@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Balloon Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="initial-screen">
+        <img src="logo.png" alt="House of Jorda Logo" id="logo">
+    </div>
+    <div id="main-menu" class="hidden">
+        <div id="info">
+            <p>House Color: <span id="house-color">Green</span></p>
+            <p>Score: <span id="score">0</span></p>
+        </div>
+        <button id="play-btn">Play</button>
+        <button id="invite-btn">Invite Friends</button>
+        <p id="invite-hint">Invite friends and earn 500 coins for each invite!</p>
+    </div>
+    <div id="game-screen" class="hidden">
+        <div id="game-header">
+            <span id="live-score">Score: 0</span>
+            <button id="leaderboard-btn">Leaderboard</button>
+        </div>
+        <div id="game-area"></div>
+        <div id="game-over" class="hidden">
+            <h2>Game Over!</h2>
+            <p>Your score: <span id="final-score">0</span></p>
+            <button id="play-again-btn">Play Again</button>
+            <button id="leave-btn">Leave</button>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
