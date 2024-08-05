@@ -1,0 +1,100 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const initialScreen = document.getElementById('initial-screen');
+    const mainMenu = document.getElementById('main-menu');
+    const gameScreen = document.getElementById('game-screen');
+    const gameArea = document.getElementById('game-area');
+    const liveScoreDisplay = document.getElementById('live-score');
+    const finalScoreDisplay = document.getElementById('final-score');
+    const gameOverScreen = document.getElementById('game-over');
+    const playAgainButton = document.getElementById('play-again-btn');
+    const leaveButton = document.getElementById('leave-btn');
+    const playButton = document.getElementById('play-btn');
+    const inviteButton = document.getElementById('invite-btn');
+    const leaderboardButton = document.getElementById('leaderboard-btn');
+    const houseColorDisplay = document.getElementById('house-color');
+    
+    let score = 0;
+    let gameInterval;
+    const balloonColors = ['red', 'blue', 'green', 'yellow', 'purple'];
+    const houseColor = 'green'; // Example house color
+    houseColorDisplay.textContent = houseColor;
+    const houseColorName = houseColor.toLowerCase();
+
+    playButton.addEventListener('click', () => {
+        initialScreen.classList.add('hidden');
+        mainMenu.classList.remove('hidden');
+    });
+
+    inviteButton.addEventListener('click', () => {
+        window.prompt('Share this game with your friends!', 'https://your-game-url.com');
+    });
+
+    leaderboardButton.addEventListener('click', () => {
+        window.alert('Leaderboard feature not implemented yet.');
+    });
+
+    playAgainButton.addEventListener('click', () => {
+        score = parseInt(liveScoreDisplay.textContent.split(' ')[1]);
+        liveScoreDisplay.textContent = Score: ${score};
+        gameOverScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
+        startGame();
+    });
+
+    leaveButton.addEventListener('click', () => {
+        window.location.href = 'https://t.me/houseofchewataBot';
+    });
+
+    function startGame() {
+        gameInterval = setInterval(() => {
+            createBalloon();
+        }, 1000); // Balloons fall every second
+    }
+
+    function createBalloon() {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        const randomColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+        balloon.style.backgroundColor = randomColor;
+        balloon.style.left = ${Math.random() * (gameArea.clientWidth - 50)}px;
+        balloon.style.top = '-50px';
+        balloon.addEventListener('click', () => handleBalloonClick(balloon, randomColor));
+        gameArea.appendChild(balloon);
+        animateBalloon(balloon);
+    }
+
+    function animateBalloon(balloon) {
+        let top = -50;
+        const fallInterval = setInterval(() => {
+            top += 5;
+            balloon.style.top = ${top}px;
+            if (top > gameArea.clientHeight) {
+                clearInterval(fallInterval);
+                balloon.remove();
+                endGame();
+            }
+        }, 20);
+    }
+
+    function handleBalloonClick(balloon, color) {
+        if (color === houseColorName) {
+            score += 10;
+            liveScoreDisplay.textContent = Score: ${score};
+        } else {
+            endGame();
+        }
+        balloon.remove();
+    }
+
+    function endGame() {
+        clearInterval(gameInterval);
+        gameScreen.classList.add('hidden');
+        gameOverScreen.classList.remove('hidden');
+        finalScoreDisplay.textContent = score;
+    }
+
+    // Start the initial screen
+    mainMenu.classList.add('hidden');
+    gameScreen.classList.add('hidden');
+    startGame();
+});
